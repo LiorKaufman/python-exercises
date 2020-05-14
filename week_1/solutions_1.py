@@ -1,4 +1,5 @@
 import os
+import time
 
 
 # Q 1
@@ -100,5 +101,110 @@ def max_word_len(filename):
         text = 'File not found'
 
 
+print('Check output.txt for the solution')
 max_word_len('dorian_gray.txt')
+print('*'*25)
+
+
+# Q 4 create a function that will accepts a number
+# if the number is positive we will want to know how many times the digit 0 appears in that number.
+# E.G for 10030 the function should return "The digit 0 appears 3 times"
+# Solve the problem using 3 diffirent ways and measure how long each solution took.
+# Use import time
+
+def find_digits_one():
+    try:
+        num = int(input("Enter a positive integer: "))
+        t0 = time.perf_counter()
+        count = 0
+        if num < 0:
+            return "Num must be positive"
+        while num > 0:
+            # If the number can be divided by 10 and the remainder is 0 that means the last digit of the number is 0.
+            if num % 10 == 0:
+                count = count + 1
+            # floor division rounds the result to the nearest whole number
+            # Any number below 10 when // by 10 result in 0
+            num = num // 10
+        t1 = time.perf_counter()
+        print('Number of times the digit 0 appears: ', count)
+        print('Running time: ', t1-t0, 'sec')
+    except ValueError:
+        print('Not a valid value, try again!')
+
+
+def find_digits_two():
+    try:
+        num = int(input("Enter a positive integer: "))
+        t0 = time.perf_counter()
+        count = 0
+        if num < 0:
+            return "Num must be positive"
+        num_as_string = str(num)
+        for digit in num_as_string:
+            if digit == '0':
+                count = count + 1
+        t1 = time.perf_counter()
+        print('Number of times the digit 0 appears: ', count)
+        print('Running time: ', t1-t0, 'sec')
+    except ValueError:
+        print('Not a valid value, try again!')
+
+
+def find_digits_three():
+    try:
+        num = int(input("Enter a positive integer: "))
+        t0 = time.perf_counter()
+        count = 0
+        if num < 0:
+            return "Num must be positive"
+        #  Using the string count method
+        num_as_string = str(num)
+        count = num_as_string.count('0')
+        t1 = time.perf_counter()
+        print('Number of times the digit 0 appears: ', count)
+        print('Running time: ', t1-t0, 'sec')
+    except ValueError:
+        print('Not a valid value, try again!')
+
+
+# Q 5 create a function that simulates the game: 7 Boom!
+#  if a number can be divided by 7 but does not have the digit 7 the output should be Boom!
+# If a number has the digit 7 one or more times the out put should be boom-boom-boom! as the number of times the digit 7 appears
+# if the number has the digit 7 and can be divided by 7 the output should be bada-boom!
+#  your function k_boom will simulate the game where K can be any positive integer in the range of 1 and 9
+#  E.g: 770 -> bada-boom!, 14-> Boom!, 7177 -> boom-boom-boom!
+
+
+def find_digits(num, digit):
+    num_as_string = str(num)
+    count = num_as_string.count(str(digit))
+    return count
+
+
+def k_boom(start, end, k):
+    for num in range(start, end):
+        count_k = find_digits(num, k)
+        if num % k == 0 and count_k == 0:
+            print(num, 'Boom!')
+        elif num % k == 0 and count_k >= 1:
+            print(num, 'Bada-Boom!')
+        elif num % k != 0 and count_k >= 1:
+            if count_k == 1:
+                print(num, 'Boom!')
+            elif count_k > 1:
+                print(num, 'Boom-'*(count_k - 1), 'boom!')
+        else:
+            print(num)
+
+
+k_boom(10, 29, 4)
+print('*'*25)
+
+
+find_digits_one()
+print('*'*25)
+find_digits_two()
+print('*'*25)
+find_digits_three()
 print('*'*25)
